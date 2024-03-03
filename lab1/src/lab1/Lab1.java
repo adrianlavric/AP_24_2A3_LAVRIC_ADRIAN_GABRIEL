@@ -35,7 +35,7 @@ public class Lab1 {
         }
 
         if(a > b) {
-            System.out.println("a >= b.");
+            System.out.println("a <= b.");
         }
 
         lab1.homework(a, b, k);
