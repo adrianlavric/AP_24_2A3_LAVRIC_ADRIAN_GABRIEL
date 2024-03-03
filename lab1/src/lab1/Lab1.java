@@ -1,6 +1,20 @@
-public class Main {
-    public static void main(String[] args) {
+package lab1;
 
+/**
+ *
+ * @author Lavric Adrian-Gabriel
+ */
+
+
+public class Lab1 {
+
+    public static void main(String[] args) {
+        Lab1 lab1 = new Lab1();
+        lab1.compulsory();
+
+    }
+
+    public void compulsory() {
         System.out.println("Hello World!");
 
         String[] languages = {"C", "C++", "C#", "Python", "Go", "Rust", "JavaScript", "PHP", "Swift", "Java"};
@@ -30,6 +44,14 @@ public class Main {
         result = sumCif;
 
         System.out.println("Willy-nilly, this semester I will learn " + languages[result]);
+    }
+    void homework() {
+
+
 
     }
+    void bonus() {
+
+    }
+
 }
