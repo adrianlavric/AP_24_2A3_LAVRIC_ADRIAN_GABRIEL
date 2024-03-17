@@ -58,6 +58,17 @@ public class Trip {
         this.attractions = attractions;
     }
 
+    public List<Attraction> getVisitableNonPayableLocations() {
+        List<Attraction> visitableNonPayableLocations = new ArrayList<>();
+        for (Attraction attraction : attractions) {
+            if (attraction instanceof Visitable && !(attraction instanceof Payable)) {
+                visitableNonPayableLocations.add(attraction);
+            }
+        }
+        visitableNonPayableLocations.sort(Comparator.comparing(attraction -> ((Visitable) attraction).getOpeningHour(LocalDate.now())));
+        return visitableNonPayableLocations;
+    }
+
     @Override
     public String toString() {
         StringBuilder tripToString = new StringBuilder();
