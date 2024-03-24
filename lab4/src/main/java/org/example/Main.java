@@ -1,23 +1,31 @@
 package org.example;
 
+import com.github.javafaker.Faker;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  *
  * @author Lavric Adrian-Gabriel
  */
 
-public class Main {
+public class Lab4 {
     public static void main(String[] args) {
 
+        Lab4 lab4 = new Lab4();
+        lab4.Compulsory();
+        lab4.Homework();
+
+    }
+
+    public void Compulsory() {
         Random random = new Random();
-        LinkedList<Person> persons = IntStream.rangeClosed(1, 20)
+        var persons = IntStream.rangeClosed(1, 20)
                 .mapToObj(i -> {
                     String name = "Person" + i;
-                    int age = i + 18;
+                    int age = i + 10 + random.nextInt(50);
                     String destination = "Destination" + random.nextInt(10);
                     return random.nextBoolean() ? new Driver(name, age, destination) : new Passenger(name, age, destination);
                 })
@@ -42,6 +50,19 @@ public class Main {
         passengers.stream()
                 .sorted(Comparator.comparing(Passenger::getName))
                 .forEach(System.out::println);
+    }
+
+    public void Homework() {
+        CarSharing carSharing = new CarSharing(10, 10);
+        System.out.println("all the destinations that the drivers pass through: " + carSharing.getAllDestinationsOfDrivers());
+        System.out.println("map of destinations and people: " + carSharing.getDestinationsOfPassengers());
+        carSharing.greedySolution();
+
+    }
+
+    public void Bonus() {
+
+
 
     }
 }
