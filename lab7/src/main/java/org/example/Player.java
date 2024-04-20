@@ -8,6 +8,7 @@ public class Player implements Runnable {
     private Game game;
     private boolean running;
     private List<Tile> tiles = new ArrayList<>();
+    private int maxSequenceLength = 0;
 
     public Player(String name) {
         this.name = name;
@@ -27,14 +28,16 @@ public class Player implements Runnable {
                         Tile extractedTile = extractedTiles.get(0);
                         System.out.println(name + " extracted tile: (" + extractedTile.getNumber1() + "," + extractedTile.getNumber2() + ")");
                         tiles.addAll(extractedTiles);
+                        checkEndGame();
                     }
                     List<List<Tile>> sequences = findSequences(tiles);
                     printSequences(sequences);
                     if (sequences.stream().anyMatch(seq -> seq.size() >= game.getN())) {
-                        //game.endGame();
+                        game.endGame();
                         break;
                     }
                 } else {
+                    checkEndGame();
                     break;
                 }
             }
@@ -66,8 +69,15 @@ public class Player implements Runnable {
             if (sequence.size() >= 3 && sequence.get(sequence.size() - 1).getNumber2() == startTile.getNumber1()) {
                 sequences.add(sequence);
             }
+            if(sequence.size() > maxSequenceLength) {
+                maxSequenceLength = sequence.size();
+            }
         }
         return sequences;
+    }
+
+    public String getName() {
+        return name;
     }
 
     private Tile findNextTile(Tile currentTile) {
@@ -98,5 +108,15 @@ public class Player implements Runnable {
 
     public void stopPlayer() {
         running = false;
+    }
+
+    public synchronized int getMaxSequenceLength() {
+        return maxSequenceLength;
+    }
+
+    private void checkEndGame() {
+        if (game.getBag().isEmpty()) {
+            game.endGame();
+        }
     }
 }
