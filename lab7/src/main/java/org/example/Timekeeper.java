@@ -12,12 +12,22 @@ public class Timekeeper extends Thread {
 
     @Override
     public void run() {
-        try {
-            Thread.sleep(timeLimit * 1000);
-            System.out.println("Game ended, time limit exceeded.");
-            System.exit(0);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        while(true) {
+            long runningTime = System.currentTimeMillis() - startTime;
+            long remainingTime = timeLimit * 1000 - runningTime;
+
+            if (remainingTime <= 0) {
+                System.out.println("Game ended, time limit exceeded.");
+                System.exit(0);
+            }
+
+            System.out.println("Time passed: " + runningTime / 1000 + " seconds");
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
