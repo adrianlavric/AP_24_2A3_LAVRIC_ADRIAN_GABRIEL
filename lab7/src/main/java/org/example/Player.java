@@ -21,14 +21,20 @@ public class Player implements Runnable {
     public void run() {
         running = true;
         while (running) {
-            synchronized (game.getBag()) {
+            synchronized (game) {
+                while (!game.isPlayerTurn(this)) {
+                    try {
+                        game.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 if (!game.getBag().isEmpty()) {
                     List<Tile> extractedTiles = game.getBag().extractTiles(1);
                     if (!extractedTiles.isEmpty()) {
                         Tile extractedTile = extractedTiles.get(0);
                         System.out.println(name + " extracted tile: (" + extractedTile.getNumber1() + "," + extractedTile.getNumber2() + ")");
                         tiles.addAll(extractedTiles);
-                        checkEndGame();
                     }
                     List<List<Tile>> sequences = findSequences(tiles);
                     printSequences(sequences);
@@ -37,9 +43,11 @@ public class Player implements Runnable {
                         break;
                     }
                 } else {
-                    checkEndGame();
+                    game.endGame();
                     break;
                 }
+                game.nextPlayerTurn();
+                game.notifyAll();
             }
             try {
                 Thread.sleep(1000);
@@ -51,22 +59,22 @@ public class Player implements Runnable {
 
     private List<List<Tile>> findSequences(List<Tile> tiles) {
         List<List<Tile>> sequences = new ArrayList<>();
-        for (Tile startTile : tiles) {
+        for (Tile tile : tiles) {
             List<Tile> sequence = new ArrayList<>();
-            sequence.add(startTile);
-            Tile nextTile = startTile;
+            sequence.add(tile);
+            Tile nextTile = tile;
             while (true) {
                 nextTile = findNextTile(nextTile);
                 if (nextTile != null && !sequence.contains(nextTile)) {
                     sequence.add(nextTile);
-                    if (nextTile.getNumber2() == startTile.getNumber1()) {
+                    if (nextTile.getNumber2() == tile.getNumber1()) {
                         break;
                     }
                 } else {
                     break;
                 }
             }
-            if (sequence.size() >= 3 && sequence.get(sequence.size() - 1).getNumber2() == startTile.getNumber1()) {
+            if (sequence.size() >= 3 && sequence.get(sequence.size() - 1).getNumber2() == tile.getNumber1()) {
                 sequences.add(sequence);
             }
             if(sequence.size() > maxSequenceLength) {
@@ -120,3 +128,4 @@ public class Player implements Runnable {
         }
     }
 }
+

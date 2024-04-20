@@ -8,6 +8,7 @@ public class Game {
     private final List<Player> players = new ArrayList<>();
     private final int n;
     private final Timekeeper timekeeper;
+    private int currentPlayerIndex = 0;
 
     public Game(int numPlayers, int numTiles, int timeLimit) {
         bag = new Bag(numTiles);
@@ -34,6 +35,17 @@ public class Game {
     public int getN() {
         return n;
     }
+    public boolean isPlayerTurn(Player player) {
+        synchronized (this) {
+            return players.indexOf(player) == currentPlayerIndex;
+        }
+    }
+
+    public void nextPlayerTurn() {
+        synchronized (this) {
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        }
+    }
 
     public void endGame() {
         timekeeper.interrupt();
@@ -57,7 +69,7 @@ public class Game {
     public static void main(String args[]) {
         int numPlayers = 3;
         int numTiles = 10;
-        int timeLimit = 5;
+        int timeLimit = 500;
         Game game = new Game(numPlayers, numTiles, timeLimit);
         game.addPlayer(new Player("Player 1"));
         game.addPlayer(new Player("Player 2"));
