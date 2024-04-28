@@ -4,6 +4,11 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
+        //Compulsory();
+        Homework();
+    }
+
+    public static void Compulsory() {
         try {
             var authors1 = new AuthorDAO();
             authors1.create("Mihai Eminescu");
@@ -28,5 +33,11 @@ public class Main {
             System.err.println(e);
             Database.rollback();
         }
+    }
+
+    public static void Homework() {
+        DataImporter dataImporter = new DataImporter();
+        String filePath = "C:\\Users\\adria\\OneDrive\\Desktop\\AP_24_2A3_LAVRIC_ADRIAN_GABRIEL\\lab8\\src\\main\\resources\\books.csv";
+        dataImporter.importData(filePath);
     }
 }
