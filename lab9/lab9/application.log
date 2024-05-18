@@ -1,0 +1,20 @@
+May 14, 2024 6:46:31 PM org.example.repositories.BookRepository findByAuthor
+INFO: JPQL (Find books by author) query executed in 50 ms
+May 14, 2024 6:46:31 PM org.example.repositories.BookRepository isBookAssociatedWithAuthor
+INFO: JPQL (Is book associated with author) query executed in 13 ms
+May 14, 2024 6:48:47 PM org.example.repositories.BookRepository findByAuthor
+INFO: JPQL (Find books by author) query executed in 52 ms
+May 14, 2024 6:48:47 PM org.example.repositories.BookRepository isBookAssociatedWithAuthor
+INFO: JPQL (Is book associated with author) query executed in 9 ms
+May 15, 2024 10:19:17 AM org.example.repositories.BookRepository findByAuthor
+INFO: JPQL (Find books by author) query executed in 39 ms
+May 15, 2024 10:19:17 AM org.example.repositories.BookRepository isBookAssociatedWithAuthor
+INFO: JPQL (Is book associated with author) query executed in 6 ms
+May 15, 2024 10:44:15 AM org.example.repositories.BookRepository findByAuthor
+INFO: JPQL (Find books by author) query executed in 46 ms
+May 15, 2024 10:44:15 AM org.example.repositories.BookRepository isBookAssociatedWithAuthor
+INFO: JPQL (Is book associated with author) query executed in 7 ms
+May 15, 2024 11:43:07 AM org.example.repositories.BookRepository findByAuthor
+INFO: JPQL (Find books by author) query executed in 41 ms
+May 15, 2024 11:43:07 AM org.example.repositories.BookRepository isBookAssociatedWithAuthor
+INFO: JPQL (Is book associated with author) query executed in 5 ms
